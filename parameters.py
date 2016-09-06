@@ -12,15 +12,15 @@ class Dataset:
 
 class Network:
     input_size = 48
-    output_size = 7
+    output_size = 5
     activation = 'relu'
-    keep_prob = 0.7
+    keep_prob = 0.8
     optimizer = 'momentum'
     loss = 'categorical_crossentropy'
 
 class Training:
     batch_size = 128
-    epochs = 100
+    epochs = 200
     snapshot_step = 100
     vizualize = True
     logs_dir = "logs"
