@@ -1,0 +1,8 @@
+__pycache__/
+*$py.class
+*.pyc
+*.so
+.cache
+*.bin
+data/*
+data
