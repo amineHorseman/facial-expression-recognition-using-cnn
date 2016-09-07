@@ -23,7 +23,6 @@ print "start training..."
         batch_size=TRAINING.batch_size)
 """
 
-#model.fit({'input1': data['X'], 'input2': data['X2']}, {'output': data['Y']}, 
 print data['Y'].shape
 model.fit([data['X'], data['X2']], data['Y'],
         validation_set=([validation['X'], validation['X2']], validation['Y']),
