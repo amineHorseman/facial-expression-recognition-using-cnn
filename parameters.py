@@ -7,7 +7,7 @@ class Dataset:
     validation_folder = '../fer2013/fer2013_5000x5/validation_set'
     test_folder = '../fer2013/fer2013_5000x5/test_set'
     trunc_trainset_to = -1
-    trunc_validationset_to = 500
+    trunc_validationset_to = -1
     trunc_testset_to = -1
 
 class Network:
@@ -19,6 +19,8 @@ class Network:
 class Hyperparams:
     keep_prob = 0.8
     learning_rate = 0.001
+    learning_rate_decay = 0.96
+    decay_step = 50
     optimizer = 'momentum'
 
 class Training:
@@ -27,8 +29,8 @@ class Training:
     snapshot_step = 100
     vizualize = True
     logs_dir = "logs"
-    checkpoint_dir = "checkpoints"
-    best_checkpoint_path = "checkpoints/best"
+    checkpoint_dir = "checkpoints/"
+    best_checkpoint_path = "checkpoints/best/"
     max_checkpoints = 1
     checkpoint_frequency = 1.0 # in hours
     save_model = False

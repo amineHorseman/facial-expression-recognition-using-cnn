@@ -7,12 +7,14 @@ from data_loader import load_data
 from parameters import DATASET, TRAINING, HYPERPARAMS
 from model import build_model
 
-def train(optimizer=HYPERPARAMS.optimizer, learning_rate=HYPERPARAMS.learning_rate, keep_prob=HYPERPARAMS.keep_prob):
+def train(optimizer=HYPERPARAMS.optimizer, learning_rate=HYPERPARAMS.learning_rate, keep_prob=HYPERPARAMS.keep_prob, 
+        learning_rate_decay=HYPERPARAMS.learning_rate_decay, decay_step=HYPERPARAMS.decay_step):
+
         print "loading dataset " + DATASET.name + "..."
         data, validation = load_data(validation=True)
 
         print "building model..."
-        network = build_model(optimizer, learning_rate, keep_prob)
+        network = build_model(optimizer, learning_rate, keep_prob, learning_rate_decay, decay_step)
         model = DNN(network, tensorboard_dir=TRAINING.logs_dir, 
                 tensorboard_verbose=0, checkpoint_path=TRAINING.checkpoint_dir,
                 max_checkpoints=TRAINING.max_checkpoints)
@@ -20,6 +22,10 @@ def train(optimizer=HYPERPARAMS.optimizer, learning_rate=HYPERPARAMS.learning_ra
         #tflearn.config.init_graph(seed=None, log_device=False, num_cores=6)
 
         print "start training..."
+        print "  - learning_rate = {}".format(learning_rate)
+        print "  - learning_rate_decay = {}".format(learning_rate_decay)
+        print "  - keep_prob = {}".format(keep_prob)
+        print "  - epochs = {}".format(TRAINING.epochs)
         start_time = time.time()
         """model.fit({'input1': data['X']}, {'output': data['Y']}, n_epoch=TRAINING.epochs, 
                 validation_set=({'input': validation['X']}, {'output': validation['Y']}),
@@ -28,16 +34,25 @@ def train(optimizer=HYPERPARAMS.optimizer, learning_rate=HYPERPARAMS.learning_ra
         """
         model.fit([data['X'], data['X2']], data['Y'],
                 validation_set=([validation['X'], validation['X2']], validation['Y']),
+                n_epoch=TRAINING.epochs,
                 show_metric=TRAINING.vizualize,
                 batch_size=TRAINING.batch_size)
         training_time = time.time() - start_time
-        print "training time = " + training_time
+        print "training time = {0:.1f} sec".format(training_time)
 
         if TRAINING.save_model:
                 print "saving model..."
                 model.save(TRAINING.save_model_path)
 
-        return accuracy, training_time
+        print "evaluating..."
+        validation_accuracy = evaluate(model, validation['X'], validation['X2'], validation['Y'])
+        print "  - accuracy = {0:.1f}".format(validation_accuracy*100)
+
+        return validation_accuracy, training_time
+
+def evaluate(model, X, X2, Y):
+        accuracy = model.evaluate([X, X2], Y)
+        return accuracy[0]
 
 # parse arg to see if we need to launch training now or not yet
 parser = argparse.ArgumentParser()
