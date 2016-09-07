@@ -48,7 +48,7 @@ def train(optimizer=HYPERPARAMS.optimizer, learning_rate=HYPERPARAMS.learning_ra
         validation_accuracy = evaluate(model, validation['X'], validation['X2'], validation['Y'])
         print "  - accuracy = {0:.1f}".format(validation_accuracy*100)
 
-        return validation_accuracy, training_time
+        return validation_accuracy
 
 def evaluate(model, X, X2, Y):
         accuracy = model.evaluate([X, X2], Y)
