@@ -72,6 +72,7 @@ def evaluate(model, X, X2, Y):
 # parse arg to see if we need to launch training now or not yet
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--train", default="no", help="if 'yes', launch training from command line")
+parser.add_argument("-m", "--max_evals", help="Maximum number of evaluations during hyperparameters search")
 args = parser.parse_args()
 if args.train=="yes" or args.train=="Yes" or args.train=="YES":
         train()
