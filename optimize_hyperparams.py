@@ -2,6 +2,7 @@
 import time
 import argparse
 import pprint
+import numpy as np 
 from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
 
 from train import train
@@ -22,6 +23,7 @@ parser.add_argument("-m", "--max_evals", required=True, help="Maximum number of 
 args = parser.parse_args()
 max_evals = int(args.max_evals)
 current_eval = 1
+train_history = []
 
 # defint the fucntion to minimize (will train the model using the specified hyperparameters)
 def function_to_minimize(hyperparams, optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer_param, 
@@ -43,10 +45,21 @@ def function_to_minimize(hyperparams, optimizer=HYPERPARAMS.optimizer, optimizer
     print "       Evaluation {} of {}".format(current_eval, max_evals)
     print "#################################"
     start_time = time.time()
-    accuracy = train(learning_rate=learning_rate, learning_rate_decay=learning_rate_decay, 
+    try:
+        accuracy = train(learning_rate=learning_rate, learning_rate_decay=learning_rate_decay, 
                      optimizer=optimizer, optimizer_param=optimizer_param, keep_prob=keep_prob)
-    current_eval += 1
-    return {'loss': -accuracy, 'time': int(round(time.time() - start_time)), 'status': STATUS_OK}
+        training_time = int(round(time.time() - start_time))
+        current_eval += 1
+        train_history.append({'accuracy':accuracy, 'learning_rate':learning_rate, 'learning_rate_decay':learning_rate_decay, 
+                                  'optimizer':optimizer, 'optimizer_param':optimizer_param, 'keep_prob':keep_prob, 'time':training_time})
+    except Exception as e:
+        # exception occured during training, saving history and stopping the operation
+        print "#################################"
+        print "Exception during training: {}".format(str(e))
+        print "Saving train history in train_history.npy"
+        np.save("train_history.npy", train_history)
+        exit()
+    return {'loss': -accuracy, 'time': training_time, 'status': STATUS_OK}
 
 # lunch the hyperparameters search
 trials = Trials()
