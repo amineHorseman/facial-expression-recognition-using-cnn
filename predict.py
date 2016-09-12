@@ -11,8 +11,11 @@ import dlib
 import cv2
 import os
 
-from parameters import DATASET, TRAINING, HYPERPARAMS, NETWORK
+from parameters import DATASET, TRAINING, NETWORK
 from model import build_model
+
+EMOTIONS = ["Angry", "Happy", "Sad", "Surprise", "Neutral"]
+PRINT_EMOTIONS = False
 
 def load_model():
 
@@ -20,9 +23,7 @@ def load_model():
     with tf.Graph().as_default():
         print "loading pretrained model..."
         network = build_model()
-        model = DNN(network, tensorboard_dir=TRAINING.logs_dir, 
-                    tensorboard_verbose=0, checkpoint_path=TRAINING.checkpoint_dir,
-                    max_checkpoints=TRAINING.max_checkpoints)
+        model = DNN(network)
         if os.path.isfile(TRAINING.save_model_path):
             model.load(TRAINING.save_model_path)
         else:
@@ -37,7 +38,7 @@ def get_landmarks(image, rects, predictor):
         raise NoFaces
     return np.matrix([[p.x, p.y] for p in predictor(image, rects[0]).parts()])
 
-def predict(model, image, shape_predictor=None):
+def predict(image, model, shape_predictor=None):
     # get landmarks
     if NETWORK.use_landmarks:
         face_rects = [dlib.rectangle(left=0, top=0, right=NETWORK.input_size, bottom=NETWORK.input_size)]
@@ -49,9 +50,10 @@ def predict(model, image, shape_predictor=None):
     return get_emotion(predicted_label[0])
 
 def get_emotion(label):
-    print "- Angry: {0:.1f}%\n- Happy: {1:.1f}%\n- Sad: {2:.1f}%\n- Surprise: {3:.1f}%\n- Neutral: {4:.1f}%".format(
-        label[0]*100, label[1]*100, label[2]*100, label[3]*100, label[4]*100
-    )
+    if PRINT_EMOTIONS:
+        print "- Angry: {0:.1f}%\n- Happy: {1:.1f}%\n- Sad: {2:.1f}%\n- Surprise: {3:.1f}%\n- Neutral: {4:.1f}%".format(
+                label[0]*100, label[1]*100, label[2]*100, label[3]*100, label[4]*100)
+    return EMOTIONS[label.index(max(label))], max(label)
 
 # parse arg to see if we need to launch training now or not yet
 parser = argparse.ArgumentParser()
@@ -63,8 +65,9 @@ if args.image:
         image = cv2.imread(args.image, 0)
         shape_predictor = dlib.shape_predictor(DATASET.shape_predictor_path)
         start_time = time.time()
-        emotion = predict(model, image, shape_predictor)
+        emotion, confidence = predict(image, model, shape_predictor)
         total_time = time.time() - start_time
+        print "Prediction: {0} (confidence: {1:.1f}%)".format(emotion, confidence*100)
         print "time: {0:.1f} sec".format(total_time)
     else:
         print "Error: file '{}' not found".format(args.image)

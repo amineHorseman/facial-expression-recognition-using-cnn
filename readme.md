@@ -10,6 +10,7 @@ TODO: Add description here
 - Numpy
 - Argparse
 - [optional] Hyperopt + pymongo + networkx
+- [optional] dlib, imutils, opencv 3
 
 # HOW TO USE?
 
@@ -31,7 +32,7 @@ python train.py --train=yes --evaluate=yes
 N.B: make sure the parameter "save_model" (in parameters.py) is set to True if you want to train and evaluate
 
 ## Optimize training hyperparameters
-1. For this section, you'll need to install first the optional dependencies:
+1. For this section, you'll need to install first these optional dependencies:
 ```
 pip install hyperopt, pymongo, networkx
 ```
@@ -47,8 +48,8 @@ N.B: the accuracies displayed is for validation_set (not test_set)
 
 ### Evaluate model (calculating test accuracy)
 
-1. Modify 'parameters.py' set:
-
+1. Modify 'parameters.py':
+ 
 Set "save_model_path" parameter to the path of your pretrained file
 
 2. Launch evaluation on test_set:
@@ -57,14 +58,30 @@ Set "save_model_path" parameter to the path of your pretrained file
 python train.py --evaluate=yes
 ```
 
-### Predicting the emotions from an image file
+### Recognizing facial expressions from an image file
 
-1. Modify 'parameters.py' set:
+1. For this section you will need to install `dlib` and `opencv 3` dependencies
+
+2. Modify 'parameters.py':
 
 Set "save_model_path" parameter to the path of your pretrained file
 
-2. Predict emotions from a file
+3. Predict emotions from a file
 
 ```
 python predict.py --image path/to/image.jpg
+```
+
+### Recognizing facial expressions in real time from video
+
+1. For this section you will need to install `dlib`, `imutils` and `opencv 3` dependencies
+
+2. Modify 'parameters.py':
+
+Set "save_model_path" parameter to the path of your pretrained file
+
+3. Predict emotions from a file
+
+```
+python predict-from-video.py
 ```
