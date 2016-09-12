@@ -1,4 +1,7 @@
-
+"""
+@AmineHorseman
+Sep, 1st, 2016
+"""
 from parameters import DATASET, NETWORK
 import numpy as np
 

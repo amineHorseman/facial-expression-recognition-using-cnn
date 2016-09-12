@@ -1,7 +1,7 @@
 
 # Facial expression (emotion) recognition for AI Samurai v2
 
-
+TODO: Add description here
 
 # Dependencies
 
@@ -45,7 +45,7 @@ python optimize_hyperparams.py --max_evals=20
 
 N.B: the accuracies displayed is for validation_set (not test_set)
 
-### Evaluate model (test phase)
+### Evaluate model (calculating test accuracy)
 
 1. Modify 'parameters.py' set:
 
@@ -55,4 +55,16 @@ Set "save_model_path" parameter to the path of your pretrained file
 
 ```
 python train.py --evaluate=yes
+```
+
+### Predicting the emotions from an image file
+
+1. Modify 'parameters.py' set:
+
+Set "save_model_path" parameter to the path of your pretrained file
+
+2. Predict emotions from a file
+
+```
+python predict.py --image path/to/image.jpg
 ```
