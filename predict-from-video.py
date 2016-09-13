@@ -21,6 +21,7 @@ class EmotionRecognizer:
     TEXT_COLOR = (0, 255, 0)
     TIME_TO_MEMORIZE_PERSON = 5
     SHOW_CONFIDENCE = False
+    TIME_TO_WAIT_BETWEEN_PREDICTIONS = 0.5
 
     def __init__(self):
        
@@ -34,6 +35,9 @@ class EmotionRecognizer:
             self.shape_predictor = dlib.shape_predictor(DATASET.shape_predictor_path)
         
         self.model = load_model()
+        self.last_predicted_time = 0
+        self.last_predicted_confidence = 0
+        self.last_predicted_emotion = ""
 
     def predict_emotion(self, image):
         image.resize([NETWORK.input_size, NETWORK.input_size], refcheck=False)
@@ -62,7 +66,14 @@ class EmotionRecognizer:
 
                     # try to recognize emotion
                     face = gray[y:y+h, x:x+w].copy()
-                    label, confidence = self.predict_emotion(face)
+                    if time.time() - self.last_predicted_time < self.TIME_TO_WAIT_BETWEEN_PREDICTIONS:
+                        label = self.last_predicted_emotion
+                        confidence = self.last_predicted_confidence
+                    else:
+                        label, confidence = self.predict_emotion(face)
+                        self.last_predicted_emotion = label
+                        self.last_predicted_confidence = confidence
+                        self.last_predicted_time = time.time()
                     if self.SHOW_CONFIDENCE:
                         text = "{0} ({1:.1f}%)".format(label, confidence*100)
                     else:
