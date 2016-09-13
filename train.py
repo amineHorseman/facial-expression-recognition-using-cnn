@@ -42,6 +42,9 @@ def train(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer
                         print "  - otimizer_param ({}) = {}".format('beta1' if optimizer == 'adam' else 'momentum', optimizer_param)
                         print "  - keep_prob = {}".format(keep_prob)
                         print "  - epochs = {}".format(TRAINING.epochs)
+                        print "  - use landmarks = {}".format(NETWORK.use_landmarks)
+                        print "  - use batchnorm after conv = {}".format(NETWORK.use_batchnorm_after_conv_layers)
+                        print "  - use batchnorm after fc = {}".format(NETWORK.use_batchnorm_after_fully_connected_layers)
 
                         start_time = time.time()
                         if NETWORK.use_landmarks:

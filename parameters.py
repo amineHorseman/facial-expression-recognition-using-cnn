@@ -20,6 +20,8 @@ class Network:
     activation = 'relu'
     loss = 'categorical_crossentropy'
     use_landmarks = True
+    use_batchnorm_after_conv_layers = False
+    use_batchnorm_after_fully_connected_layers = False
 
 class Hyperparams:
     keep_prob = 0.8
@@ -32,7 +34,7 @@ class Hyperparams:
 class Training:
     batch_size = 128
     epochs = 1
-    snapshot_step = 100
+    snapshot_step = 1000
     vizualize = True
     logs_dir = "logs"
     checkpoint_dir = "checkpoints/"
