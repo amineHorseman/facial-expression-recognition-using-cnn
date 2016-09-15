@@ -43,6 +43,7 @@ def train(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer
                         print "  - keep_prob = {}".format(keep_prob)
                         print "  - epochs = {}".format(TRAINING.epochs)
                         print "  - use landmarks = {}".format(NETWORK.use_landmarks)
+                        print "  - use hog + landmarks = {}".format(NETWORK.use_hog_and_landmarks)
                         print "  - use batchnorm after conv = {}".format(NETWORK.use_batchnorm_after_conv_layers)
                         print "  - use batchnorm after fc = {}".format(NETWORK.use_batchnorm_after_fully_connected_layers)
 

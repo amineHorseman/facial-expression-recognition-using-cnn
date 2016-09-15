@@ -6,12 +6,12 @@ import os
 
 class Dataset:
     name = 'Fer2013'
-    train_folder = '../fer2013/fer2013_5000x5/train_set'
-    validation_folder = '../fer2013/fer2013_5000x5/validation_set'
-    test_folder = '../fer2013/fer2013_5000x5/test_set'
+    train_folder = '../fer2013/fer2013_30000x5/train_set'
+    validation_folder = '../fer2013/fer2013_30000x5/validation_set'
+    test_folder = '../fer2013/fer2013_30000x5/test_set'
     shape_predictor_path='../fer2013/shape_predictor_68_face_landmarks.dat'
     trunc_trainset_to = 500
-    trunc_validationset_to = 100
+    trunc_validationset_to = 500
     trunc_testset_to = -1
 
 class Network:
@@ -19,7 +19,8 @@ class Network:
     output_size = 5
     activation = 'relu'
     loss = 'categorical_crossentropy'
-    use_landmarks = True
+    use_landmarks = False
+    use_hog_and_landmarks = True
     use_batchnorm_after_conv_layers = False
     use_batchnorm_after_fully_connected_layers = False
 
@@ -34,7 +35,7 @@ class Hyperparams:
 class Training:
     batch_size = 128
     epochs = 1
-    snapshot_step = 1000
+    snapshot_step = 10000
     vizualize = True
     logs_dir = "logs"
     checkpoint_dir = "checkpoints/"
