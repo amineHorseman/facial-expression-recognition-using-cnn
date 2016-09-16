@@ -9,26 +9,22 @@ import cv2
 import time
 import dlib
 
-from parameters import NETWORK, DATASET
+from parameters import NETWORK, DATASET, VIDEO_PREDICTOR
 from model import build_model
 from predict import load_model, predict
+from api import create_osc_socket, create_socket, send_to_osc, send_by_socket
 
 class EmotionRecognizer:
-
-    CAMERA_SOURCE = 0
-    FACE_DETECTION_CLASSIFIER = "lbpcascade_frontalface.xml"
+    
     BOX_COLOR = (0, 255, 0)
     TEXT_COLOR = (0, 255, 0)
-    TIME_TO_MEMORIZE_PERSON = 5
-    SHOW_CONFIDENCE = False
-    TIME_TO_WAIT_BETWEEN_PREDICTIONS = 0.5
 
     def __init__(self):
        
         # initializebevideo stream
-        self.video_stream = cv2.VideoCapture(self.CAMERA_SOURCE)
+        self.video_stream = cv2.VideoCapture(VIDEO_PREDICTOR.camera_source)
   
-        self.face_detector = cv2.CascadeClassifier(self.FACE_DETECTION_CLASSIFIER)
+        self.face_detector = cv2.CascadeClassifier(VIDEO_PREDICTOR.face_detection_classifier)
 
         self.shape_predictor = None
         if NETWORK.use_landmarks:
@@ -39,6 +35,14 @@ class EmotionRecognizer:
         self.last_predicted_confidence = 0
         self.last_predicted_emotion = ""
 
+        try:
+            if VIDEO_PREDICTOR.send_by_osc_socket:
+                osc_socket = create_osc_socket()
+            if VIDEO_PREDICTOR.send_by_socket:
+                socket = create_socket()
+        except:
+            print "Error while creating socket"
+
     def predict_emotion(self, image):
         image.resize([NETWORK.input_size, NETWORK.input_size], refcheck=False)
         emotion, confidence = predict(image, self.model, self.shape_predictor)
@@ -47,6 +51,7 @@ class EmotionRecognizer:
     def recognize_emotions(self):
         failedFramesCount = 0
         detected_faces = []
+        time_last_sent = 0
         while True:
             grabbed, frame = self.video_stream.read()
 
@@ -66,7 +71,7 @@ class EmotionRecognizer:
 
                     # try to recognize emotion
                     face = gray[y:y+h, x:x+w].copy()
-                    if time.time() - self.last_predicted_time < self.TIME_TO_WAIT_BETWEEN_PREDICTIONS:
+                    if time.time() - self.last_predicted_time < VIDEO_PREDICTOR.time_to_wait_between_predictions:
                         label = self.last_predicted_emotion
                         confidence = self.last_predicted_confidence
                     else:
@@ -74,12 +79,23 @@ class EmotionRecognizer:
                         self.last_predicted_emotion = label
                         self.last_predicted_confidence = confidence
                         self.last_predicted_time = time.time()
-                    if self.SHOW_CONFIDENCE:
+                    
+                    # display and send message by socket
+                    if VIDEO_PREDICTOR.show_confidence:
                         text = "{0} ({1:.1f}%)".format(label, confidence*100)
                     else:
                         text = label
                     if label is not None:
                         cv2.putText(frame, text, (x - 20, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7, self.TEXT_COLOR, 2)
+                        if time_last_sent - time.time() > VIDEO_PREDICTOR.time_to_wait_to_send_by_socket:
+                            try:
+                                if VIDEO_PREDICTOR.send_by_osc_socket:
+                                    send_to_osc(osc_socket, label)
+                                if VIDEO_PREDICTOR.send_by_socket:
+                                    send_by_socket(socket, label)
+                            except:
+                                print "Error when send socket message"
+                            time_last_sent = time.time()
 
                 # display images
                 cv2.imshow("Facial Expression Recognition", frame)

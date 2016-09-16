@@ -45,6 +45,19 @@ class Training:
     save_model = True
     save_model_path = "checkpoints/saved_model.bin"
 
+class VideoPredictor:
+    emotions = ["Angry", "Happy", "Sad", "Surprise", "Neutral"]
+    print_emotions = False
+    send_by_osc_socket = False
+    send_by_socket = False
+    ip = "127.0.0.1"    # destination address for sockets and OSC sockets 
+    port = 9003
+    camera_source = 0
+    face_detection_classifier = "lbpcascade_frontalface.xml"
+    show_confidence = False
+    time_to_wait_between_predictions = 0.5
+    time_to_wait_to_send_by_socket = 5
+
 def make_dir(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -53,6 +66,7 @@ DATASET = Dataset()
 NETWORK = Network()
 TRAINING = Training()
 HYPERPARAMS = Hyperparams()
+VIDEO_PREDICTOR = VideoPredictor()
 
 make_dir(TRAINING.logs_dir)
 make_dir(TRAINING.checkpoint_dir)

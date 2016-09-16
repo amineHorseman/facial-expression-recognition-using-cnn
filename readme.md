@@ -1,9 +1,14 @@
 
-# Facial expression (emotion) recognition for AI Samurai v2
+#Facial expression (emotion) recognition for AI Samurai v2
 
-TODO: Add description here
+Facial expression recognition from using Tensorflow and python.
 
-# Dependencies
+The program contains also real time expression recognition from video/camera stream.
+
+Note: Better to use anaconda environemnt to easily install the dependencies (especially opencv and dlib)
+
+
+#Dependencies
 
 - Tensorflow
 - Tflearn
@@ -12,9 +17,10 @@ TODO: Add description here
 - [optional] Hyperopt + pymongo + networkx
 - [optional] dlib, imutils, opencv 3
 
-# HOW TO USE?
 
-## Train the model
+#HOW TO USE?
+
+###Train the model
 1. Choose your parameters in 'parameters.py'
 
 2. Launch training:
@@ -31,7 +37,7 @@ python train.py --train=yes --evaluate=yes
 
 N.B: make sure the parameter "save_model" (in parameters.py) is set to True if you want to train and evaluate
 
-## Optimize training hyperparameters
+###Optimize training hyperparameters
 1. For this section, you'll need to install first these optional dependencies:
 ```
 pip install hyperopt, pymongo, networkx
@@ -46,7 +52,7 @@ python optimize_hyperparams.py --max_evals=20
 
 N.B: the accuracies displayed is for validation_set (not test_set)
 
-### Evaluate model (calculating test accuracy)
+###Evaluate model (calculating test accuracy)
 
 1. Modify 'parameters.py':
  
@@ -58,7 +64,7 @@ Set "save_model_path" parameter to the path of your pretrained file
 python train.py --evaluate=yes
 ```
 
-### Recognizing facial expressions from an image file
+###Recognizing facial expressions from an image file
 
 1. For this section you will need to install `dlib` and `opencv 3` dependencies
 
@@ -72,7 +78,7 @@ Set "save_model_path" parameter to the path of your pretrained file
 python predict.py --image path/to/image.jpg
 ```
 
-### Recognizing facial expressions in real time from video
+###Recognizing facial expressions in real time from video
 
 1. For this section you will need to install `dlib`, `imutils` and `opencv 3` dependencies
 
@@ -85,3 +91,28 @@ Set "save_model_path" parameter to the path of your pretrained file
 ```
 python predict-from-video.py
 ```
+
+
+
+#Link to the dataset with extracted landmarks:
+
+- Fer2013 with 5 emotions:
+
+https://drive.google.com/open?id=0B7EJ2zNpQ8rtLTFabU9zSHlzWmM
+
+- Fer2013 with 3 emotions:
+
+https://drive.google.com/open?id=0B7EJ2zNpQ8rtOHMzWU9xMjZORFU
+
+
+
+#Classification results:
+
+###Classification using 5 emotions
+
+Inline-style: 
+![alt text](https://github.com/Nextremer/AI-SAMURAI-facial-expression-recognition/Classification_results_5_emotions.png "Test accuracy results")
+
+###Classification using 3 emotions
+
+Quick experiments showed that the classification reached 70% after 10 epochs
