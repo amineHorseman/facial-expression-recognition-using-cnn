@@ -93,16 +93,19 @@ python predict-from-video.py
 ```
 
 
-
 #Link to the dataset with extracted landmarks:
+
+- Fer2013 with 7 emotions:
+
+https://drive.google.com/open?id=0B7EJ2zNpQ8rtclpJMVctNTJXTU0
 
 - Fer2013 with 5 emotions:
 
-https://drive.google.com/open?id=0B7EJ2zNpQ8rtLTFabU9zSHlzWmM
+https://drive.google.com/open?id=0B7EJ2zNpQ8rtb05IY0IydFBSTjA
 
 - Fer2013 with 3 emotions:
 
-https://drive.google.com/open?id=0B7EJ2zNpQ8rtOHMzWU9xMjZORFU
+https://drive.google.com/open?id=0B7EJ2zNpQ8rtRC00bEFtRUJnN2s
 
 
 
@@ -115,4 +118,4 @@ Inline-style:
 
 ###Classification using 3 emotions
 
-Quick experiments showed that the classification reached 70% after 10 epochs
+Quick experiments showed that the classification reached 73% after 10 epochs
