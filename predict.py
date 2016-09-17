@@ -39,6 +39,7 @@ def predict(image, model, shape_predictor=None):
     if NETWORK.use_landmarks:
         face_rects = [dlib.rectangle(left=0, top=0, right=NETWORK.input_size, bottom=NETWORK.input_size)]
         face_landmarks = np.array([get_landmarks(image, face_rects, shape_predictor)])
+        flatten_image = image.reshape([-1, NETWORK.input_size, NETWORK.input_size, 1])
         predicted_label = model.predict([flatten_image, face_landmarks])
         return get_emotion(predicted_label[0])
     else:
