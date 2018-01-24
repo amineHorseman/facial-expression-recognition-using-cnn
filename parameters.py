@@ -19,13 +19,13 @@ class Network:
     output_size = 5
     activation = 'relu'
     loss = 'categorical_crossentropy'
-    use_landmarks = False
-    use_hog_and_landmarks = True
-    use_batchnorm_after_conv_layers = False
+    use_landmarks = True
+    use_hog_and_landmarks = False
+    use_batchnorm_after_conv_layers = True
     use_batchnorm_after_fully_connected_layers = False
 
 class Hyperparams:
-    keep_prob = 0.8
+    keep_prob = 0.928
     learning_rate = 0.001
     learning_rate_decay = 0.96
     decay_step = 50
@@ -43,7 +43,7 @@ class Training:
     max_checkpoints = 1
     checkpoint_frequency = 1.0 # in hours
     save_model = True
-    save_model_path = "checkpoints/saved_model.bin"
+    save_model_path = "/media/amine/OS_SSD/Users/the_c_000/Desktop/best model/saved_model.bin"
 
 class VideoPredictor:
     emotions = ["Angry", "Happy", "Sad", "Surprise", "Neutral"]
