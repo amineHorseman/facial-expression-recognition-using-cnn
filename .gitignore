@@ -7,3 +7,15 @@ __pycache__/
 data/*
 data
 *.npy
+*.csv
+*.dat
+fer2013
+fer2013_features/
+best model/
+chekpoints/
+logs/
+checkpoint
+temp.jpg
+*.index
+*.meta
+checkpoint-*
