@@ -24,6 +24,7 @@ The problem challenge is that Fer2013 images are not aligned and it's difficult 
 | CNN + Face landmarks                                     |     47.3%     |
 | CNN + Face landmarks + HOG                               |     66.8%     |
 | CNN + Face landmarks + HOG + batch norm                  |     68.7%     |
+| CNN + Face landmarks + HOG + sliding window + batch norm |     71.4%     |
 
 For the experiments we used only 5 expressions: Angry, Happy, Sad, Surprise, Neutral.
 
@@ -65,6 +66,7 @@ Better to use anaconda environemnt to easily install the dependencies (especiall
     `-j`, `--jpg` (yes|no): **save images as .jpg files (default=no)**
     `-l`, `--landmarks` *(yes|no)*: **extract Dlib Face landmarks (default=yes)**
     `-ho`, `--hog` (yes|no): **extract HOG features (default=yes)**
+    `-hw`, `--hog_windows` (yes|no): **extract HOG features using a sliding window (default=yes)**
     `-o`, `--onehot` (yes|no): **one hot encoding (default=yes)**
     `-e`, `--expressions` (list of numbers): **choose the faciale expression you want to use: *0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral* (default=0,1,2,3,4,5,6)**
 

@@ -36,6 +36,7 @@ def train(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer
                 if train_model:
                         # Training phase
                         print "start training..."
+                        print "  - emotions = {}".format(NETWORK.output_size)
                         print "  - optimizer = '{}'".format(optimizer)
                         print "  - learning_rate = {}".format(learning_rate)
                         print "  - learning_rate_decay = {}".format(learning_rate_decay)
@@ -44,6 +45,7 @@ def train(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer
                         print "  - epochs = {}".format(TRAINING.epochs)
                         print "  - use landmarks = {}".format(NETWORK.use_landmarks)
                         print "  - use hog + landmarks = {}".format(NETWORK.use_hog_and_landmarks)
+                        print "  - use hog sliding window + landmarks = {}".format(NETWORK.use_hog_sliding_window_and_landmarks)
                         print "  - use batchnorm after conv = {}".format(NETWORK.use_batchnorm_after_conv_layers)
                         print "  - use batchnorm after fc = {}".format(NETWORK.use_batchnorm_after_fully_connected_layers)
 
