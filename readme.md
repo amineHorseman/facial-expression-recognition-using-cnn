@@ -158,43 +158,9 @@ Press 'q' key to stop.
 
 Important: During prediction, if you get an error `file 'saved_model.bin' not found`, check in the folder of the saved model if a file `saved_model.bin.meta` exists, if this is the case, just remove the extension `.meta` and it should work (I didn't yet find the solution for this bug)
 
-<<<<<<< HEAD
 ## TODO
 Some ideas for interessted contributors:
 - Python 3 compatibility
 - Change model's architecture?
 - Add other features extraction techniques?
 - Add more datasets?
-=======
-# Link to the dataset with extracted landmarks:
-
-You can find the database link and the scripts to extract the landmark explained in this repository:
-
-https://github.com/amineHorseman/facial-expression-recognition-svm
-
-Make sure to set the parameter `--onehot` to `yes` before converting the dataset. That's because this CNN code is expecting a onehot encoding vector as input, but the default svm code is using a 1D encoding vector.
-
-# Changing the parameters in parameters.py script:
-
-You may change the parameters in this file according to your need.
-
-Please note that by default the parameter `trunc_trainset_to` is fixed to `500`, this means that we only use the first 500 images to train the model (that's because the training takes a long time so I used just the 500 first images to test if there's no bug in the code). To use the whole dataset please set this parameter to `-1`.
-
-Please not that for the same reason the `epochs` parameter is set by default to `1`, you might also want to change it.
-
-# Classification results:
-
-#### Classification using 5 emotions
-
-Inline-style: 
-![alt text](https://github.com/amineHorseman/facial-expression-recognition-using-cnn/blob/master/Classification_results_5_emotions.png "Test accuracy results")
-
-The comparison with SVM was done using the results from this package:
-
-https://github.com/amineHorseman/facial-expression-recognition-svm
-
-
-#### Classification using 3 emotions
-
-Quick experiments showed that the classification reached 73% after 10 epochs
->>>>>>> 1691278c9368b4827e2ffb98f8670a8c1d5e26c7
