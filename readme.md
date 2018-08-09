@@ -95,6 +95,8 @@ python train.py --train=yes --evaluate=yes
 
 N.B: make sure the parameter "save_model" (in parameters.py) is set to True if you want to train and evaluate
 
+Important: During evaluation, if you get an error `file 'saved_model.bin' not found`, check in the folder of the saved model if a file `saved_model.bin.meta` exists, if this is the case, just remove the extension `.meta` and it should work (I didn't yet find the solution for this bug) 
+
 ### Optimize training hyperparameters
 1. For this section, you'll need to install first these optional dependencies:
 ```
@@ -136,6 +138,8 @@ Set "save_model_path" parameter to the path of your pretrained file
 python predict.py --image path/to/image.jpg
 ```
 
+Important: During prediction, if you get an error `file 'saved_model.bin' not found`, check in the folder of the saved model if a file `saved_model.bin.meta` exists, if this is the case, just remove the extension `.meta` and it should work (I didn't yet find the solution for this bug)
+
 ### Recognizing facial expressions in real time from video
 
 1. For this section you will need to install `dlib`, `imutils` and `opencv 3` dependencies
@@ -151,6 +155,8 @@ python predict-from-video.py
 ```
 A window will appear with a box around the face and the predicted expression.
 Press 'q' key to stop.
+
+Important: During prediction, if you get an error `file 'saved_model.bin' not found`, check in the folder of the saved model if a file `saved_model.bin.meta` exists, if this is the case, just remove the extension `.meta` and it should work (I didn't yet find the solution for this bug)
 
 ## TODO
 Some ideas for interessted contributors:

@@ -34,9 +34,11 @@ def build_model(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.opt
     if NETWORK.use_batchnorm_after_fully_connected_layers:
         images_network = batch_normalization(images_network)
 
-    if NETWORK.use_landmarks:
+    if NETWORK.use_landmarks or NETWORK.use_hog_and_landmarks:
         if NETWORK.use_hog_sliding_window_and_landmarks:
             landmarks_network = input_data(shape=[None, 2728], name='input2')
+        elif NETWORK.use_hog_and_landmarks:
+            landmarks_network = input_data(shape=[None, 208], name='input2')
         else:
             landmarks_network = input_data(shape=[None, 68, 2], name='input2')
         landmarks_network = fully_connected(landmarks_network, 1024, activation=NETWORK.activation)

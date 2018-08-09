@@ -11,7 +11,7 @@ data
 *.dat
 fer2013
 fer2013_features/
-best model/
+best_model/
 chekpoints/
 logs/
 checkpoint

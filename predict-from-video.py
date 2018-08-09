@@ -12,7 +12,6 @@ import dlib
 from parameters import NETWORK, DATASET, VIDEO_PREDICTOR
 from model import build_model
 from predict import load_model, predict
-from api import create_osc_socket, create_socket, send_to_osc, send_by_socket
 
 class EmotionRecognizer:
     
@@ -34,14 +33,6 @@ class EmotionRecognizer:
         self.last_predicted_time = 0
         self.last_predicted_confidence = 0
         self.last_predicted_emotion = ""
-
-        try:
-            if VIDEO_PREDICTOR.send_by_osc_socket:
-                osc_socket = create_osc_socket()
-            if VIDEO_PREDICTOR.send_by_socket:
-                socket = create_socket()
-        except:
-            print "Error while creating socket"
 
     def predict_emotion(self, image):
         image.resize([NETWORK.input_size, NETWORK.input_size], refcheck=False)
@@ -87,15 +78,6 @@ class EmotionRecognizer:
                         text = label
                     if label is not None:
                         cv2.putText(frame, text, (x - 20, y - 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7, self.TEXT_COLOR, 2)
-                        if time_last_sent - time.time() > VIDEO_PREDICTOR.time_to_wait_to_send_by_socket:
-                            try:
-                                if VIDEO_PREDICTOR.send_by_osc_socket:
-                                    send_to_osc(osc_socket, label)
-                                if VIDEO_PREDICTOR.send_by_socket:
-                                    send_by_socket(socket, label)
-                            except:
-                                print "Error when send socket message"
-                            time_last_sent = time.time()
 
                 # display images
                 cv2.imshow("Facial Expression Recognition", frame)
