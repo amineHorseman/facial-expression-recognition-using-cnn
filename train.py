@@ -71,6 +71,9 @@ def train(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer
                         if TRAINING.save_model:
                                 print "saving model..."
                                 model.save(TRAINING.save_model_path)
+                                if not(os.path.isfile(TRAINING.save_model_path)) and \
+                                        os.path.isfile(TRAINING.save_model_path + ".meta"):
+                                        os.rename(TRAINING.save_model_path + ".meta", TRAINING.save_model_path)
 
                         print "evaluating..."
                         validation_accuracy = evaluate(model, validation['X'], validation['X2'], validation['Y'])
