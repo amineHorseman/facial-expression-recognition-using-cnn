@@ -10,7 +10,7 @@ The goal is to get a quick baseline to compare if the CNN architecture performs 
 To train the model, we use Fer2013 datset that contains 30,000 images of expressions grouped in seven categories: Angry, Disgust, Fear, Happy, Sad, Surprise and Neutral.
 The problem challenge is that Fer2013 images are not aligned and it's difficult to classify facial expressions from it. The faces are first detected using opencv, then we extract the face landmarks using dlib. We also extracted the HOG features and we input the raw image data with the face landmarks+hog into a 4 layered convolutional neural network.
 
-![Model's architecture](https://AmineHorseman/model_architecture.png)
+![Model's architecture](https://github.com/amineHorseman/facial-expression-recognition-using-cnn/blob/master/model_architecture.png)
 
 ## Classification Results:
 
