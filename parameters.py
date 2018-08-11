@@ -26,17 +26,17 @@ class Network:
     use_batchnorm_after_fully_connected_layers = False
 
 class Hyperparams:
-    keep_prob = 0.89383
-    learning_rate = 0.09632
-    learning_rate_decay = 0.6972
+    keep_prob = 0.8537    # dropout = 1 - keep_prob
+    learning_rate = 0.04735
+    learning_rate_decay = 0.8721
     decay_step = 50
-    optimizer = 'momentum'  # {'momentum', 'adam'}
-    optimizer_param = 0.75463   # momentum value for Momentum optimizer, or beta1 value for Adam
+    optimizer = 'momentum'  # {'momentum', 'adam', 'rmsprop', 'adagrad', 'adadelta'}
+    optimizer_param = 0.707   # momentum value for Momentum optimizer, or beta1 value for Adam
 
 class Training:
     batch_size = 128
-    epochs = 15
-    snapshot_step = 10000
+    epochs = 13
+    snapshot_step = 500
     vizualize = True
     logs_dir = "logs"
     checkpoint_dir = "checkpoints/chk"
@@ -54,6 +54,13 @@ class VideoPredictor:
     show_confidence = False
     time_to_wait_between_predictions = 0.5
 
+class OptimizerSearchSpace:
+    learning_rate = {'min': 0.00001, 'max': 0.1}
+    learning_rate_decay = {'min': 0.5, 'max': 0.99}
+    optimizer = ['momentum']   # ['momentum', 'adam', 'rmsprop', 'adagrad', 'adadelta']
+    optimizer_param = {'min': 0.5, 'max': 0.99}
+    keep_prob = {'min': 0.7, 'max': 0.99}
+
 def make_dir(folder):
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -63,6 +70,7 @@ NETWORK = Network()
 TRAINING = Training()
 HYPERPARAMS = Hyperparams()
 VIDEO_PREDICTOR = VideoPredictor()
+OPTIMIZER = OptimizerSearchSpace()
 
 make_dir(TRAINING.logs_dir)
 make_dir(TRAINING.checkpoint_dir)

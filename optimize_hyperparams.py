@@ -9,15 +9,15 @@ import numpy as np
 from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
 
 from train import train
-from parameters import HYPERPARAMS
+from parameters import HYPERPARAMS, OPTIMIZER
 
 # define the search space
 fspace = {
-    'learning_rate': hp.uniform('learning_rate', 0.00001, 0.1),
-    'learning_rate_decay': hp.uniform('learning_rate_decay', 0.5, 0.99),
-    #'optimizer': hp.choice('optimizer', ['momentum', 'adam']),
-    'optimizer_param': hp.uniform('optimizer_param', 0.5, 0.99),
-    'keep_prob': hp.uniform('keep_prob', 0.7, 1.0)
+    'learning_rate': hp.uniform('learning_rate', OPTIMIZER.learning_rate['min'], OPTIMIZER.learning_rate['max']),
+    'learning_rate_decay': hp.uniform('learning_rate_decay', OPTIMIZER.learning_rate_decay['min'], OPTIMIZER.learning_rate_decay['max']),
+    'optimizer': hp.choice('optimizer', OPTIMIZER.optimizer),
+    'optimizer_param': hp.uniform('optimizer_param', OPTIMIZER.optimizer_param['min'], OPTIMIZER.optimizer_param['max']),
+    'keep_prob': hp.uniform('keep_prob', OPTIMIZER.keep_prob['min'], OPTIMIZER.keep_prob['max'])
 }
 
 # parse arguments
