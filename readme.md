@@ -67,6 +67,7 @@ Better to use anaconda environemnt to easily install the dependencies (especiall
     `-l`, `--landmarks` *(yes|no)*: **extract Dlib Face landmarks (default=yes)**
     `-ho`, `--hog` (yes|no): **extract HOG features (default=yes)**
     `-hw`, `--hog_windows` (yes|no): **extract HOG features using a sliding window (default=yes)**
+    `-hi`, `--hog_images` (yes|no): **extract HOG images (default=no)**
     `-o`, `--onehot` (yes|no): **one hot encoding (default=yes)**
     `-e`, `--expressions` (list of numbers): **choose the faciale expression you want to use: *0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral* (default=0,1,2,3,4,5,6)**
 

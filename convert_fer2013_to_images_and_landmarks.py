@@ -18,9 +18,10 @@ ONE_HOT_ENCODING = True
 SAVE_IMAGES = False
 GET_LANDMARKS = False
 GET_HOG_FEATURES = False
+GET_HOG_IMAGES = False
 GET_HOG_WINDOWS_FEATURES = False
 SELECTED_LABELS = []
-IMAGES_PER_LABEL = 1000000000
+IMAGES_PER_LABEL = 10
 OUTPUT_FOLDER_NAME = "fer2013_features"
 
 # parse arguments and initialize variables:
@@ -29,6 +30,7 @@ parser.add_argument("-j", "--jpg", default="no", help="save images as .jpg files
 parser.add_argument("-l", "--landmarks", default="yes", help="extract Dlib Face landmarks")
 parser.add_argument("-ho", "--hog", default="yes", help="extract HOG features")
 parser.add_argument("-hw", "--hog_windows", default="yes", help="extract HOG features from a sliding window")
+parser.add_argument("-hi", "--hog_images", default="no", help="extract HOG images")
 parser.add_argument("-o", "--onehot", default="yes", help="one hot encoding")
 parser.add_argument("-e", "--expressions", default="0,1,2,3,4,5,6", help="choose the faciale expression you want to use: 0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral")
 args = parser.parse_args()
@@ -40,6 +42,8 @@ if args.hog == "yes":
     GET_HOG_FEATURES = True
 if args.hog_windows == "yes":
     GET_HOG_WINDOWS_FEATURES = True
+if args.hog_images == "yes":
+    GET_HOG_IMAGES = True
 if args.onehot == "yes":
     ONE_HOT_ENCODING = True
 if args.expressions != "":
@@ -130,12 +134,14 @@ for category in data['Usage'].unique():
                     f, hog_image = hog(image, orientations=8, pixels_per_cell=(16, 16),
                                             cells_per_block=(1, 1), visualise=True)
                     hog_features.append(features)
-                    hog_images.append(hog_image)
+                    if GET_HOG_IMAGES:
+                        hog_images.append(hog_image)
                 elif GET_HOG_FEATURES:
                     features, hog_image = hog(image, orientations=8, pixels_per_cell=(16, 16),
                                             cells_per_block=(1, 1), visualise=True)
                     hog_features.append(features)
-                    hog_images.append(hog_image)
+                    if GET_HOG_IMAGES:
+                        hog_images.append(hog_image)
                 if GET_LANDMARKS:
                     scipy.misc.imsave('temp.jpg', image)
                     image2 = cv2.imread('temp.jpg')
@@ -156,4 +162,5 @@ for category in data['Usage'].unique():
         np.save(OUTPUT_FOLDER_NAME + '/' + category + '/landmarks.npy', landmarks)
     if GET_HOG_FEATURES or GET_HOG_WINDOWS_FEATURES:
         np.save(OUTPUT_FOLDER_NAME + '/' + category + '/hog_features.npy', hog_features)
-        np.save(OUTPUT_FOLDER_NAME + '/' + category + '/hog_images.npy', hog_images)
+        if GET_HOG_IMAGES:
+            np.save(OUTPUT_FOLDER_NAME + '/' + category + '/hog_images.npy', hog_images)
