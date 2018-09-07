@@ -12,10 +12,11 @@ data
 fer2013
 fer2013_features/
 best_model/
-chekpoints/
+checkpoints/
 logs/
-checkpoint
+checkpoint*
 temp.jpg
 *.index
 *.meta
-checkpoint-*
+*.xml
+experimental_results.md

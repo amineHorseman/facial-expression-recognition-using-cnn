@@ -7,10 +7,12 @@ The package uses a convolutional neural network to classify images from files or
 
 The goal is to get a quick baseline to compare if the CNN architecture performs better when it uses only the raw pixels of images for training, or if it's better to feed some extra information to the CNN (such as face landmarks or HOG features). The results show that the extra information helps the CNN to perform better.
 
-To train the model, we use Fer2013 datset that contains 30,000 images of expressions grouped in seven categories: Angry, Disgust, Fear, Happy, Sad, Surprise and Neutral.
-The problem challenge is that Fer2013 images are not aligned and it's difficult to classify facial expressions from it. The faces are first detected using opencv, then we extract the face landmarks using dlib. We also extracted the HOG features and we input the raw image data with the face landmarks+hog into a 4 layered convolutional neural network.
+To train the model, we use Fer2013 datset that contains 30,000 images of facial expressions grouped in seven categories: Angry, Disgust, Fear, Happy, Sad, Surprise and Neutral.
 
-![Model's architecture](https://github.com/amineHorseman/facial-expression-recognition-using-cnn/model_architecture.png)
+The faces are first detected using opencv, then we extract the face landmarks using dlib. We also extracted the HOG features and we input the raw image data with the face landmarks+hog into a 4 layered convolutional neural network.
+
+![Model's architecture](img/model_architecture.png)
+
 
 ## Classification Results:
 
@@ -28,8 +30,20 @@ The problem challenge is that Fer2013 images are not aligned and it's difficult 
 
 For the experiments we used only 5 expressions: Angry, Happy, Sad, Surprise, Neutral.
 
-The comparison with SVM was done using the results from this repository:
+You can find the code for the SVM implmentation in the following repository:
 [Facial Expressions Recognition using SVM](https://github.com/amineHorseman/facial-expression-recognition-svm)
+
+
+## Why is Fer2013 challenging?
+
+Fer2013 is a challenging dataset. The images are not aligned and some of them are uncorrectly labeled as we can see from the following images. Moreover, some samples do not contain faces. 
+
+![Fer2013 incorrect labeled images](img/fer2013_incorrect_labels.png)
+
+![Fer2013 strange samples](img/FER2013_strange_samples.png)
+
+This makes the classification harder because the model have to generalize well and be robust to incorrect data. The best accuracy results obtained on this dataset, as far as I know, is 75.2% described in this paper: 
+[[Facial Expression Recognition using Convolutional Neural Networks: State of the Art, Pramerdorfer & al. 2016]](https://arxiv.org/abs/1612.02903)
 
 
 ## HOW TO USE?
