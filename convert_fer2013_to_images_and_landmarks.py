@@ -21,7 +21,7 @@ GET_HOG_FEATURES = False
 GET_HOG_IMAGES = False
 GET_HOG_WINDOWS_FEATURES = False
 SELECTED_LABELS = []
-IMAGES_PER_LABEL = 10
+IMAGES_PER_LABEL = 1000000000
 OUTPUT_FOLDER_NAME = "fer2013_features"
 
 # parse arguments and initialize variables:

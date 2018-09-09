@@ -37,6 +37,7 @@ def train(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer
                         # Training phase
                         print "start training..."
                         print "  - emotions = {}".format(NETWORK.output_size)
+                        print "  - model = {}".format(NETWORK.model)
                         print "  - optimizer = '{}'".format(optimizer)
                         print "  - learning_rate = {}".format(learning_rate)
                         print "  - learning_rate_decay = {}".format(learning_rate_decay)

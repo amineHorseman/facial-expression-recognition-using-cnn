@@ -15,8 +15,9 @@ class Dataset:
     trunc_testset_to = -1
 
 class Network:
+    model = 'B'
     input_size = 48
-    output_size = 5
+    output_size = 7
     activation = 'relu'
     loss = 'categorical_crossentropy'
     use_landmarks = True
@@ -26,12 +27,12 @@ class Network:
     use_batchnorm_after_fully_connected_layers = False
 
 class Hyperparams:
-    keep_prob = 0.9    # dropout = 1 - keep_prob
-    learning_rate = 0.036
-    learning_rate_decay = 0.97
+    keep_prob = 0.956   # dropout = 1 - keep_prob
+    learning_rate = 0.016
+    learning_rate_decay = 0.864
     decay_step = 50
     optimizer = 'momentum'  # {'momentum', 'adam', 'rmsprop', 'adagrad', 'adadelta'}
-    optimizer_param = 0.7  # momentum value for Momentum optimizer, or beta1 value for Adam
+    optimizer_param = 0.95   # momentum value for Momentum optimizer, or beta1 value for Adam
 
 class Training:
     batch_size = 128
@@ -47,7 +48,7 @@ class Training:
     save_model_path = "best_model/saved_model.bin"
 
 class VideoPredictor:
-    emotions = ["Angry", "Happy", "Sad", "Surprise", "Neutral"]
+    emotions = ["Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral"]
     print_emotions = False
     camera_source = 0
     face_detection_classifier = "lbpcascade_frontalface.xml"
