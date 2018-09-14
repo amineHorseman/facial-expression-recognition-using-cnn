@@ -21,7 +21,7 @@ def build_model(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.opt
     elif NETWORK.model == 'B':
         return build_modelB(optimizer, optimizer_param, learning_rate, keep_prob, learning_rate_decay, decay_step)
     else:
-        print "ERROR: no model " + str(NETWORK.model)
+        print( "ERROR: no model " + str(NETWORK.model))
         exit()
 
 def build_modelB(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.optimizer_param, 
@@ -74,7 +74,7 @@ def build_modelB(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.op
     elif optimizer == 'adam':
         optimizer = Adam(learning_rate=learning_rate, beta1=optimizer_param, beta2=learning_rate_decay)
     else:
-        print "Unknown optimizer: {}".format(optimizer)
+        print( "Unknown optimizer: {}".format(optimizer))
     network = regression(network, optimizer=optimizer, loss=NETWORK.loss, learning_rate=learning_rate, name='output')
 
     return network
@@ -126,7 +126,7 @@ def build_modelA(optimizer=HYPERPARAMS.optimizer, optimizer_param=HYPERPARAMS.op
     elif optimizer == 'adam':
         optimizer = Adam(learning_rate=learning_rate, beta1=optimizer_param, beta2=learning_rate_decay)
     else:
-        print "Unknown optimizer: {}".format(optimizer)
+        print( "Unknown optimizer: {}".format(optimizer))
     network = regression(network, optimizer=optimizer, loss=NETWORK.loss, learning_rate=learning_rate, name='output')
 
     return network

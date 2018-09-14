@@ -88,7 +88,7 @@ class EmotionRecognizer:
             else:
                 failedFramesCount += 1
                 if failedFramesCount > 10:
-                    print "can't grab frames"
+                    print( "can't grab frames")
                     break
 
         self.video_stream.release()

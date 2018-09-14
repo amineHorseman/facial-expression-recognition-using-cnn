@@ -21,13 +21,13 @@ window_step = 6
 def load_model():
     model = None
     with tf.Graph().as_default():
-        print "loading pretrained model..."
+        print( "loading pretrained model...")
         network = build_model()
         model = DNN(network)
         if os.path.isfile(TRAINING.save_model_path):
             model.load(TRAINING.save_model_path)
         else:
-            print "Error: file '{}' not found".format(TRAINING.save_model_path)
+            print( "Error: file '{}' not found".format(TRAINING.save_model_path))
     return model
 
 def get_landmarks(image, rects, predictor):
@@ -40,8 +40,8 @@ def get_landmarks(image, rects, predictor):
 
 def sliding_hog_windows(image):
     hog_windows = []
-    for y in xrange(0, NETWORK.input_size, window_step):
-        for x in xrange(0, NETWORK.input_size, window_step):
+    for y in range(0, NETWORK.input_size, window_step):
+        for x in range(0, NETWORK.input_size, window_step):
             window = image[y:y+window_size, x:x+window_size]
             hog_windows.extend(hog(window, orientations=8, pixels_per_cell=(8, 8),
                                             cells_per_block=(1, 1), visualise=False))
@@ -75,8 +75,8 @@ def predict(image, model, shape_predictor=None):
 
 def get_emotion(label):
     if VIDEO_PREDICTOR.print_emotions:
-        print "- Angry: {0:.1f}%\n- Happy: {1:.1f}%\n- Sad: {2:.1f}%\n- Surprise: {3:.1f}%\n- Neutral: {4:.1f}%".format(
-                label[0]*100, label[1]*100, label[2]*100, label[3]*100, label[4]*100)
+        print( "- Angry: {0:.1f}%\n- Happy: {1:.1f}%\n- Sad: {2:.1f}%\n- Surprise: {3:.1f}%\n- Neutral: {4:.1f}%".format(
+                label[0]*100, label[1]*100, label[2]*100, label[3]*100, label[4]*100))
     label = label.tolist()
     return VIDEO_PREDICTOR.emotions[label.index(max(label))], max(label)
 
@@ -92,7 +92,7 @@ if args.image:
         start_time = time.time()
         emotion, confidence = predict(image, model, shape_predictor)
         total_time = time.time() - start_time
-        print "Prediction: {0} (confidence: {1:.1f}%)".format(emotion, confidence*100)
-        print "time: {0:.1f} sec".format(total_time)
+        print( "Prediction: {0} (confidence: {1:.1f}%)".format(emotion, confidence*100))
+        print( "time: {0:.1f} sec".format(total_time))
     else:
-        print "Error: file '{}' not found".format(args.image)
+        print( "Error: file '{}' not found".format(args.image))

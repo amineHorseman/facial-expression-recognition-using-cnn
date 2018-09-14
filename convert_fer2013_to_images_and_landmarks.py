@@ -21,7 +21,7 @@ GET_HOG_FEATURES = False
 GET_HOG_IMAGES = False
 GET_HOG_WINDOWS_FEATURES = False
 SELECTED_LABELS = []
-IMAGES_PER_LABEL = 1000000000
+IMAGES_PER_LABEL = 500
 OUTPUT_FOLDER_NAME = "fer2013_features"
 
 # parse arguments and initialize variables:
@@ -54,10 +54,10 @@ if args.expressions != "":
             SELECTED_LABELS.append(label)
 if SELECTED_LABELS == []:
     SELECTED_LABELS = [0,1,2,3,4,5,6]
-print str(len(SELECTED_LABELS)) + " expressions"
+print( str(len(SELECTED_LABELS)) + " expressions")
 
 # loading Dlib predictor and preparing arrays:
-print "preparing"
+print( "preparing")
 predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 original_labels = [0, 1, 2, 3, 4, 5, 6]
 new_labels = list(set(original_labels) & set(SELECTED_LABELS))
@@ -89,18 +89,18 @@ def get_new_label(label, one_hot_encoding=False):
 
 def sliding_hog_windows(image):
     hog_windows = []
-    for y in xrange(0, image_height, window_step):
-        for x in xrange(0, image_width, window_step):
+    for y in range(0, image_height, window_step):
+        for x in range(0, image_width, window_step):
             window = image[y:y+window_size, x:x+window_size]
             hog_windows.extend(hog(window, orientations=8, pixels_per_cell=(8, 8),
                                             cells_per_block=(1, 1), visualise=False))
     return hog_windows
 
-print "importing csv file"
+print( "importing csv file")
 data = pd.read_csv('fer2013.csv')
 
 for category in data['Usage'].unique():
-    print "converting set: " + category + "..."
+    print( "converting set: " + category + "...")
     # create folder
     if not os.path.exists(category):
         try:
@@ -122,7 +122,7 @@ for category in data['Usage'].unique():
     landmarks = []
     hog_features = []
     hog_images = []
-    for i in xrange(len(samples)):
+    for i in range(len(samples)):
         try:
             if labels[i] in SELECTED_LABELS and nb_images_per_label[get_new_label(labels[i])] < IMAGES_PER_LABEL:
                 image = np.fromstring(samples[i], dtype=int, sep=" ").reshape((image_height, image_width))
@@ -151,7 +151,7 @@ for category in data['Usage'].unique():
                 labels_list.append(get_new_label(labels[i], one_hot_encoding=ONE_HOT_ENCODING))
                 nb_images_per_label[get_new_label(labels[i])] += 1
         except Exception as e:
-            print "error in image: " + str(i) + " - " + str(e)
+            print( "error in image: " + str(i) + " - " + str(e))
 
     np.save(OUTPUT_FOLDER_NAME + '/' + category + '/images.npy', images)
     if ONE_HOT_ENCODING:

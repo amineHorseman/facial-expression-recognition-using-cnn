@@ -76,5 +76,5 @@ def load_data(validation=False, test=False):
         else: 
             return data_dict, validation_dict, test_dict
     else:
-        print "Unknown dataset"
+        print( "Unknown dataset")
         exit()

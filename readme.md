@@ -80,6 +80,8 @@ The accuracy using the best model trained on the whole dataset (7 emotions) drop
 The state of the art results obtained on this dataset, as far as I know, is 75.2% described in [this paper](https://arxiv.org/abs/1612.02903).
 
 
+Note: the code was tested in python 2.7 and 3.6.
+
 # <a name="how-to-use">4. HOW TO USE?</a>
 
 ## <a name="install">4.1. Install dependencies</a>
@@ -209,7 +211,6 @@ N.B: If you changed the number of expressions while training the model (default 
 # <a name="contrib">5. Contributing</a>
 
 Some ideas for interessted contributors:
-- Testing Python 3 compatibility
 - Automatically downloading the data
 - Adding data augmentation?
 - Adding other features extraction techniques?
