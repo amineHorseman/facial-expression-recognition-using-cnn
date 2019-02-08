@@ -4,7 +4,7 @@ Sep, 7th, 2016
 """
 import time
 import argparse
-import pprint(
+import pprint
 import numpy as np 
 from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
 
