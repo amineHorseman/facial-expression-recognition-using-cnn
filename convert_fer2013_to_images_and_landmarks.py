@@ -4,6 +4,7 @@ import os
 import argparse
 import errno
 import scipy.misc
+import imageio
 import dlib
 import cv2
 
@@ -93,7 +94,7 @@ def sliding_hog_windows(image):
         for x in range(0, image_width, window_step):
             window = image[y:y+window_size, x:x+window_size]
             hog_windows.extend(hog(window, orientations=8, pixels_per_cell=(8, 8),
-                                            cells_per_block=(1, 1), visualise=False))
+                                            cells_per_block=(1, 1), visualize=False))
     return hog_windows
 
 print( "importing csv file")
@@ -126,24 +127,25 @@ for category in data['Usage'].unique():
         try:
             if labels[i] in SELECTED_LABELS and nb_images_per_label[get_new_label(labels[i])] < IMAGES_PER_LABEL:
                 image = np.fromstring(samples[i], dtype=int, sep=" ").reshape((image_height, image_width))
+                image = image.astype(np.uint8)
                 images.append(image)
                 if SAVE_IMAGES:
-                    scipy.misc.imsave(category + '/' + str(i) + '.jpg', image)
+                    imageio.imsave(category + '/' + str(i) + '.jpg', image)
                 if GET_HOG_WINDOWS_FEATURES:
                     features = sliding_hog_windows(image)
                     f, hog_image = hog(image, orientations=8, pixels_per_cell=(16, 16),
-                                            cells_per_block=(1, 1), visualise=True)
+                                            cells_per_block=(1, 1), visualize=True)
                     hog_features.append(features)
                     if GET_HOG_IMAGES:
                         hog_images.append(hog_image)
                 elif GET_HOG_FEATURES:
                     features, hog_image = hog(image, orientations=8, pixels_per_cell=(16, 16),
-                                            cells_per_block=(1, 1), visualise=True)
+                                            cells_per_block=(1, 1), visualize=True)
                     hog_features.append(features)
                     if GET_HOG_IMAGES:
                         hog_images.append(hog_image)
                 if GET_LANDMARKS:
-                    scipy.misc.imsave('temp.jpg', image)
+                    imageio.imsave('temp.jpg', image)
                     image2 = cv2.imread('temp.jpg')
                     face_rects = [dlib.rectangle(left=1, top=1, right=47, bottom=47)]
                     face_landmarks = get_landmarks(image2, face_rects)
