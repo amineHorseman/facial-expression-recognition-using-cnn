@@ -44,7 +44,7 @@ def sliding_hog_windows(image):
         for x in range(0, NETWORK.input_size, window_step):
             window = image[y:y+window_size, x:x+window_size]
             hog_windows.extend(hog(window, orientations=8, pixels_per_cell=(8, 8),
-                                            cells_per_block=(1, 1), visualise=False))
+                                            cells_per_block=(1, 1), visualize=False))
     return hog_windows
 
 def predict(image, model, shape_predictor=None):
@@ -60,7 +60,7 @@ def predict(image, model, shape_predictor=None):
             features = np.concatenate((face_landmarks, hog_features))
         else:
             hog_features, _ = hog(image, orientations=8, pixels_per_cell=(16, 16),
-                                    cells_per_block=(1, 1), visualise=True)
+                                    cells_per_block=(1, 1), visualize=True)
             hog_features = np.asarray(hog_features)
             face_landmarks = face_landmarks.flatten()
             features = np.concatenate((face_landmarks, hog_features))
